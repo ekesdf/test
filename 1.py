@@ -5,15 +5,22 @@ Eingabe = str(input())
 Rechenzeichenpos = 0
 Rechenzeichen = ""
 
+Plus_pos  = []
+Minus_pos = []
+Mal_pos   = []
+Durch_pos = []
+
+
+
 for Pos in range(len(Eingabe)): 
 
-    if Eingabe[Pos] == "+": Rechenzeichen = "+"
+    if Eingabe[Pos] == "+": Rechenzeichen = "+"; Plus_pos.append(Pos) 
     
-    if Eingabe[Pos] == "-": Rechenzeichen = "-"
+    if Eingabe[Pos] == "-": Rechenzeichen = "-"; Minus_pos.append(Pos)
 
-    if Eingabe[Pos] == "/": Rechenzeichen = "/"
+    if Eingabe[Pos] == "/": Rechenzeichen = "/"; Durch_pos.append(Pos)
     
-    if Eingabe[Pos] == "*": Rechenzeichen = "*"
+    if Eingabe[Pos] == "*": Rechenzeichen = "*"; Minus_pos.append(Pos)
     
    
     
