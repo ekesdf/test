@@ -14,13 +14,13 @@ Durch_pos = []
 
 for Pos in range(len(Eingabe)): 
 
-    if Eingabe[Pos] == "+": Rechenzeichen = "+"; Plus_pos.append(Pos) 
+    if Eingabe[Pos] == "+": Rechenzeichen = "+"; Plus_pos.append(Pos+1) 
     
-    if Eingabe[Pos] == "-": Rechenzeichen = "-"; Minus_pos.append(Pos)
+    if Eingabe[Pos] == "-": Rechenzeichen = "-"; Minus_pos.append(Pos+1)
 
-    if Eingabe[Pos] == "/": Rechenzeichen = "/"; Durch_pos.append(Pos)
+    if Eingabe[Pos] == "/": Rechenzeichen = "/"; Durch_pos.append(Pos+1)
     
-    if Eingabe[Pos] == "*": Rechenzeichen = "*"; Minus_pos.append(Pos)
+    if Eingabe[Pos] == "*": Rechenzeichen = "*"; Minus_pos.append(Pos+1)
     
    
     
@@ -67,15 +67,33 @@ def Durch():
 
 
 
-if Rechenzeichen != "": 
+# if Rechenzeichen != "": 
     
-    if Rechenzeichen == "+": Plus()
+#     if Rechenzeichen == "+": Plus()
 
-    if Rechenzeichen == "-": Minus()
+#     if Rechenzeichen == "-": Minus()
     
-    if Rechenzeichen == "/": Durch()
+#     if Rechenzeichen == "/": Durch()
 
-    if Rechenzeichen == "*": Mal()
+#     if Rechenzeichen == "*": Mal()
 
 
-else: print("kein Rechenzeichen enthalten")
+# else: print("kein Rechenzeichen enthalten")
+
+Errors = []
+
+def Syntax_test(liste,Rechenzeichen):
+    
+    for Pos in liste:
+
+        if Pos+1 or Pos-1 in liste:
+            Errors.append((Rechenzeichen, Pos))
+
+
+
+Syntax_test(Plus_pos,"+")
+Syntax_test(Minus_pos,"-")
+Syntax_test(Mal_pos,"*")
+Syntax_test(Durch_pos,"/")
+
+print(Errors)
