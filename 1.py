@@ -75,10 +75,8 @@ Errors = []
 
 def Syntax_test(liste,Rechenzeichen):
     
-    for Pos in liste:
-
+    for Pos in liste: 
         if Pos+1 or Pos-1 in liste: Errors.append((Rechenzeichen, Pos))
-
 
 
 # Tested auf eventuelle Syntax Fehler
