@@ -25,6 +25,7 @@ for Pos in range(len(Eingabe)):
    
     
 
+# Rechenoperation: Plus
 def Plus():
 
     Term1,Term2 = Eingabe.split("+")
@@ -35,6 +36,7 @@ def Plus():
 
     print(Ergebnis)
 
+# Rechenoperation: Minus
 def Minus():
 
     Term1, Term2 = Eingabe.split("-")
@@ -45,6 +47,7 @@ def Minus():
 
     print(Ergebnis)
 
+# Rechenoperation: Mal
 def Mal():
 
     Term1, Term2 = Eingabe.split("*")
@@ -55,6 +58,7 @@ def Mal():
 
     print(Ergebnis)
 
+# Rechenoperation: Durch
 def Durch():
 
     Term1, Term2 = Eingabe.split("/")
@@ -66,30 +70,18 @@ def Durch():
     print(Ergebnis)
 
 
-
-# if Rechenzeichen != "": 
-    
-#     if Rechenzeichen == "+": Plus()
-
-#     if Rechenzeichen == "-": Minus()
-    
-#     if Rechenzeichen == "/": Durch()
-
-#     if Rechenzeichen == "*": Mal()
-
-
-# else: print("kein Rechenzeichen enthalten")
-
+# Tested ob zwischen den Rechenzeichen mit des ein anderes zeichen ist
 Errors = []
 
 def Syntax_test(liste,Rechenzeichen):
     
     for Pos in liste:
 
-        if Pos+1 or Pos-1 in liste:
-            Errors.append((Rechenzeichen, Pos))
+        if Pos+1 or Pos-1 in liste: Errors.append((Rechenzeichen, Pos))
 
 
+
+# Tested auf eventuelle Syntax Fehler
 
 Syntax_test(Plus_pos,"+")
 Syntax_test(Minus_pos,"-")
