@@ -87,19 +87,22 @@ def Klammer_test(Klammern_liste_auf,Klammern_liste_zu):
 
     else: return True
     
-def Eingabecutter(Anfang,Ende):
+def Eingabecutter(Anfang,Ende,Eingabe):
         
-    Term = ""
+    inder_Klammer = ""
 
-    for i in range(Anfang, Ende-1):
-        
-        Term += Eingabe[i]
+    for i in range(Anfang, Ende-1): inder_Klammer += Eingabe[i]
 
-    return Term
+    vor_der_klammer = ""
 
-
+    for i in range(Anfang-1):vor_der_klammer += Eingabe[i]
 
 
+    nach_der_Klammer = ""
+
+    for i in range(Ende,len(Eingabe)): nach_der_Klammer += Eingabe[i]
+
+    return vor_der_klammer,inder_Klammer, nach_der_Klammer
 
 
 
@@ -124,6 +127,7 @@ Syntax_test(Minus_pos,"-")
 Syntax_test(Mal_pos,"*")
 Syntax_test(Durch_pos,"/")
 
+print(Errors)
 
 if Klammer_test(Klammern_auf,Klammern_zu) or len(Errors) > 0: print("Error")  
 
@@ -131,4 +135,4 @@ if Klammer_test(Klammern_auf,Klammern_zu) or len(Errors) > 0: print("Error")
 
 else: 
     print("Keine Syntaxerror")
-    print(Eingabecutter(Klammern_auf[0], Klammern_zu[0]))
+    print(Eingabecutter(Klammern_auf[0], Klammern_zu[0],Eingabe))
