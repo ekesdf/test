@@ -12,6 +12,7 @@ Durch_pos = []
 Klammern_auf = []
 Klammern_zu = []
 
+Errors = []
 
 for Pos in range(len(Eingabe)): 
 
@@ -26,11 +27,6 @@ for Pos in range(len(Eingabe)):
     if Eingabe[Pos] == "(": Klammern_auf.append(Pos+1)
 
     if Eingabe[Pos] == ")": Klammern_zu.append(Pos+1)
-
-
-
-
-
 
 
 # Rechenoperation: Plus
@@ -77,19 +73,7 @@ def Durch(Term):
 
     print(Ergebnis)
 
-def Klammer_auf(Position):
-
-    print(Position, "Auf")
-
-
-def Klammer_zu(Position):
-
-    print(Position, "Zu")
-
-
-
-
-
+# Tested ob die Klammern richtig gesetzt sind
 def Klammer_test(Klammern_liste_auf,Klammern_liste_zu):
 
     temp1 = Klammern_liste_auf
@@ -103,12 +87,31 @@ def Klammer_test(Klammern_liste_auf,Klammern_liste_zu):
 
     else: return True
     
+def Eingabecutter(Anfang,Ende):
+        
+    Term = ""
+
+    for i in range(Anfang, Ende-1):
+        
+        Term += Eingabe[i]
+
+    return Term
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 # Tested ob zwischen den Rechenzeichen mit des ein anderes zeichen ist
-Errors = []
-
 def Syntax_test(liste,Rechenzeichen):
     
     for Pos in liste: 
@@ -116,12 +119,16 @@ def Syntax_test(liste,Rechenzeichen):
 
 
 # Tested auf eventuelle Syntax Fehler
-
 Syntax_test(Plus_pos,"+")
 Syntax_test(Minus_pos,"-")
 Syntax_test(Mal_pos,"*")
 Syntax_test(Durch_pos,"/")
 
+
 if Klammer_test(Klammern_auf,Klammern_zu) or len(Errors) > 0: print("Error")  
 
-else: print("Keine Syntaxerror")
+    
+
+else: 
+    print("Keine Syntaxerror")
+    print(Eingabecutter(Klammern_auf[0], Klammern_zu[0]))
