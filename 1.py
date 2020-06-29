@@ -11,6 +11,7 @@ Mal_pos   = []
 Durch_pos = []
 Klammern_auf = []
 Klammern_zu = []
+Liste_Rechenzeichen_gesamt = []
 
 Errors = []
 
@@ -27,6 +28,15 @@ for Pos in range(len(Eingabe)):
     if Eingabe[Pos] == "(": Klammern_auf.append(Pos+1)
 
     if Eingabe[Pos] == ")": Klammern_zu.append(Pos+1)
+
+# Fügt die einzelnen Listen zu einer zusammen 
+Liste_Rechenzeichen_gesamt += Plus_pos
+Liste_Rechenzeichen_gesamt += Minus_pos
+Liste_Rechenzeichen_gesamt += Durch_pos
+Liste_Rechenzeichen_gesamt += Mal_pos
+
+# Sortiert die Liste aufsteigend
+Liste_Rechenzeichen_gesamt.sort()
 
 
 # Rechenoperation: Plus
@@ -74,19 +84,37 @@ def Durch(Term):
     print(Ergebnis)
 
 # Tested ob die Klammern richtig gesetzt sind
-def Klammer_test(Klammern_liste_auf,Klammern_liste_zu):
+def Klammer_test(Klammern_liste_auf,Klammern_liste_zu,Liste_Rechenzeichen_gesamt):
 
-    temp1 = Klammern_liste_auf
-    temp2 = Klammern_liste_zu
+    # Tested auf Syntax fehler in der Klammersetzung    
 
-    if len(temp1) == len(temp2):
+    # Gibt es Klammer in der Eingabe
+    if len(Klammern_liste_auf)> 0 or len(Klammern_liste_zu) > 0:
 
-        for index in range(len(temp1)):
+        temp1 = Klammern_liste_auf
+        temp2 = Klammern_liste_zu
 
-            if temp1[index] > temp2[index]: return True
+        # Sind gleich viele Klammer auf, wie zu in der Eingabe enthalten
+        if len(temp1) == len(temp2):
 
-    else: return True
+            for index in range(len(temp1)):
+
+                # Test auf korrekte Stellung der Klammern                
+                if (temp1[index]) >= temp2[index]-1: return True
+                   
+                else: return False
+        
+        else: return False
     
+    else: return False
+    
+
+
+
+
+
+
+
 def Eingabecutter(Anfang,Ende,Eingabe):
         
     inder_Klammer = ""
@@ -117,8 +145,11 @@ def Eingabecutter(Anfang,Ende,Eingabe):
 # Tested ob zwischen den Rechenzeichen mit des ein anderes zeichen ist
 def Syntax_test(liste,Rechenzeichen):
     
-    for Pos in liste: 
-        if Pos+1 or Pos-1 in liste: Errors.append((Rechenzeichen, Pos))
+    if len(liste) > 1:
+
+        for Pos in liste:
+        
+            if Pos+1 or Pos-1 in liste: Errors.append((Rechenzeichen, Pos))
 
 
 # Tested auf eventuelle Syntax Fehler
@@ -127,12 +158,16 @@ Syntax_test(Minus_pos,"-")
 Syntax_test(Mal_pos,"*")
 Syntax_test(Durch_pos,"/")
 
-print(Errors)
 
-if Klammer_test(Klammern_auf,Klammern_zu) or len(Errors) > 0: print("Error")  
+print(Klammer_test(Klammern_auf, Klammern_zu, Liste_Rechenzeichen_gesamt))
+
+if Klammer_test(Klammern_auf, Klammern_zu,Liste_Rechenzeichen_gesamt) or len(Errors) > 0: print("Error")
 
     
 
 else: 
     print("Keine Syntaxerror")
-    print(Eingabecutter(Klammern_auf[0], Klammern_zu[0],Eingabe))
+    try:
+        print(Eingabecutter(Klammern_auf[0], Klammern_zu[0], Eingabe))
+    except IndexError as e:
+        print("der String enthält kein Klammer")
