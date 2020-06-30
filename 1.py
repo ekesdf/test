@@ -30,14 +30,13 @@ for Pos in range(len(Eingabe)):
     if Eingabe[Pos] == ")": Klammern_zu.append(Pos+1)
 
 # Fügt die einzelnen Listen zu einer zusammen 
-Liste_Rechenzeichen_gesamt += Plus_pos
-Liste_Rechenzeichen_gesamt += Minus_pos
-Liste_Rechenzeichen_gesamt += Durch_pos
-Liste_Rechenzeichen_gesamt += Mal_pos
+if len(Plus_pos)  > 0: Liste_Rechenzeichen_gesamt += Plus_pos
+if len(Minus_pos) > 0: Liste_Rechenzeichen_gesamt += Minus_pos
+if len(Durch_pos) > 0: Liste_Rechenzeichen_gesamt += Durch_pos
+if len(Mal_pos)   > 0: Liste_Rechenzeichen_gesamt += Mal_pos
 
 # Sortiert die Liste aufsteigend
 Liste_Rechenzeichen_gesamt.sort()
-
 
 # Rechenoperation: Plus
 def Plus(Term):
@@ -83,6 +82,20 @@ def Durch(Term):
 
     print(Ergebnis)
 
+
+def Rechenzeichen_vor_der_Klammer(vor_der_klammer):
+
+    temp = vor_der_klammer
+    temp = temp[len(temp)-1]
+
+    if temp == "+": return "+"
+    elif temp == "-": return "-"
+    elif temp == "/": return "/"
+    elif temp == "*": return "*"
+
+    else: raise SyntaxError("Kein Rechenzeichen vor der Klammer")
+    
+
 # Tested ob die Klammern richtig gesetzt sind
 def Klammer_test(Klammern_liste_auf,Klammern_liste_zu,Liste_Rechenzeichen_gesamt):
 
@@ -97,6 +110,16 @@ def Klammer_test(Klammern_liste_auf,Klammern_liste_zu,Liste_Rechenzeichen_gesamt
         # Sind gleich viele Klammer auf, wie zu in der Eingabe enthalten
         if len(temp1) == len(temp2):
 
+
+            if len(Liste_Rechenzeichen_gesamt) > 0: 
+                print(Liste_Rechenzeichen_gesamt)
+
+                for index in Liste_Rechenzeichen_gesamt:
+
+                    if index+1 in Klammern_liste_auf: return False
+                    
+                    else: return
+
             for index in range(len(temp1)):
 
                 # Test auf korrekte Stellung der Klammern                
@@ -105,15 +128,9 @@ def Klammer_test(Klammern_liste_auf,Klammern_liste_zu,Liste_Rechenzeichen_gesamt
                 else: return False
         
         else: return False
-    
+ 
     else: return False
     
-
-
-
-
-
-
 
 def Eingabecutter(Anfang,Ende,Eingabe):
         
@@ -125,22 +142,11 @@ def Eingabecutter(Anfang,Ende,Eingabe):
 
     for i in range(Anfang-1):vor_der_klammer += Eingabe[i]
 
-
     nach_der_Klammer = ""
 
     for i in range(Ende,len(Eingabe)): nach_der_Klammer += Eingabe[i]
 
     return vor_der_klammer,inder_Klammer, nach_der_Klammer
-
-
-
-
-
-
-
-
-
-
 
 # Tested ob zwischen den Rechenzeichen mit des ein anderes zeichen ist
 def Syntax_test(liste,Rechenzeichen):
@@ -159,15 +165,13 @@ Syntax_test(Mal_pos,"*")
 Syntax_test(Durch_pos,"/")
 
 
-print(Klammer_test(Klammern_auf, Klammern_zu, Liste_Rechenzeichen_gesamt))
-
-if Klammer_test(Klammern_auf, Klammern_zu,Liste_Rechenzeichen_gesamt) or len(Errors) > 0: print("Error")
-
-    
+if Klammer_test(Klammern_auf, Klammern_zu, Liste_Rechenzeichen_gesamt) or len(Errors) > 0:raise SyntaxError("Es ist ein Syntaxerror aufgetreten")
 
 else: 
-    print("Keine Syntaxerror")
     try:
-        print(Eingabecutter(Klammern_auf[0], Klammern_zu[0], Eingabe))
-    except IndexError as e:
-        print("der String enthält kein Klammer")
+
+        vor_der_Klammer, in_der_Klammer, nach_der_Klammer = Eingabecutter(Klammern_auf[0], Klammern_zu[0], Eingabe)
+        Rechenzeichen_vor_der_Klammer(vor_der_Klammer)
+        print("Keine Syntaxerror") 
+        
+    except IndexError as e: raise SyntaxError("Es ist ein Syntaxerror aufgetreten")
