@@ -13,8 +13,6 @@ Klammern_auf = []
 Klammern_zu = []
 Liste_Rechenzeichen_gesamt = []
 
-Errors = []
-
 for Pos in range(len(Eingabe)): 
 
     if Eingabe[Pos] == "+": Rechenzeichen = "+"; Plus_pos.append(Pos+1) 
@@ -110,9 +108,7 @@ def Klammer_test(Klammern_liste_auf,Klammern_liste_zu,Liste_Rechenzeichen_gesamt
         # Sind gleich viele Klammer auf, wie zu in der Eingabe enthalten
         if len(temp1) == len(temp2):
 
-
             if len(Liste_Rechenzeichen_gesamt) > 0: 
-                print(Liste_Rechenzeichen_gesamt)
 
                 for index in Liste_Rechenzeichen_gesamt:
 
@@ -133,6 +129,10 @@ def Klammer_test(Klammern_liste_auf,Klammern_liste_zu,Liste_Rechenzeichen_gesamt
     
 
 def Eingabecutter(Anfang,Ende,Eingabe):
+
+    ###
+    # Zerlget die Eingabe in 3 teile,  1 vor, 1 in, 1 nach, der Klammer 
+    ###
         
     inder_Klammer = ""
 
@@ -153,9 +153,9 @@ def Syntax_test(liste,Rechenzeichen):
     
     if len(liste) > 1:
 
-        for Pos in liste:
-        
-            if Pos+1 or Pos-1 in liste: Errors.append((Rechenzeichen, Pos))
+        for Pos in liste: 
+            
+            if Pos+1 or Pos-1 in liste: raise SyntaxError("Es ist ein Syntaxerr an der Stelle",Pos)
 
 
 # Tested auf eventuelle Syntax Fehler
@@ -165,7 +165,7 @@ Syntax_test(Mal_pos,"*")
 Syntax_test(Durch_pos,"/")
 
 
-if Klammer_test(Klammern_auf, Klammern_zu, Liste_Rechenzeichen_gesamt) or len(Errors) > 0:raise SyntaxError("Es ist ein Syntaxerror aufgetreten")
+if Klammer_test(Klammern_auf, Klammern_zu, Liste_Rechenzeichen_gesamt) :raise SyntaxError("Es ist ein Syntaxerror aufgetreten")
 
 else: 
     try:
