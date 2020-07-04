@@ -5,6 +5,7 @@ Eingabe = str(input())
 Rechenzeichenpos = 0
 Rechenzeichen = ""
 
+Zahl = []
 Plus_pos = []
 Minus_pos = []
 Mal_pos = []
@@ -19,23 +20,25 @@ for Pos in range(len(Eingabe)):
         Rechenzeichen = "+"
         Plus_pos.append(Pos+1)
 
-    if Eingabe[Pos] == "-":
+    elif Eingabe[Pos] == "-":
         Rechenzeichen = "-"
         Minus_pos.append(Pos+1)
 
-    if Eingabe[Pos] == "/":
+    elif Eingabe[Pos] == "/":
         Rechenzeichen = "/"
         Durch_pos.append(Pos+1)
 
-    if Eingabe[Pos] == "*":
+    elif Eingabe[Pos] == "*":
         Rechenzeichen = "*"
         Minus_pos.append(Pos+1)
-
-    if Eingabe[Pos] == "(":
+    
+    elif Eingabe[Pos] == "(":
         Klammern_auf.append(Pos+1)
 
-    if Eingabe[Pos] == ")":
+    elif Eingabe[Pos] == ")":
         Klammern_zu.append(Pos+1)
+    
+    else: Zahl.append(Pos+1)
 
 # Fügt die einzelnen Listen zu einer zusammen
 if len(Plus_pos) > 0:  Liste_Rechenzeichen_gesamt += Plus_pos
@@ -110,3 +113,69 @@ def Eingabecutter(Anfang, Ende, Eingabe):
     for i in range(Ende, len(Eingabe)): nach_der_Klammer += Eingabe[i]
 
     return vor_der_klammer, inder_Klammer, nach_der_Klammer
+
+
+def Rechenzeichen_test():
+
+    temp = Liste_Rechenzeichen_gesamt
+
+    if len(Mal_pos) > 0 :
+
+        if Mal_pos[0] != 1 :
+            
+            if len(temp) > 1:
+
+                for Zeichen in temp :
+                    
+                    if Zeichen > 1 and Zeichen < len(Eingabe):
+                        
+                        if Zeichen+1 in temp or Zeichen-1 in temp: return "Error"
+
+        else: return "Error"
+
+    elif len(Durch_pos) > 0:
+
+            if Durch_pos[0] != 1:
+
+                if len(temp) > 1:
+
+                    for Zeichen in temp:
+
+                        if Zeichen > 1 and Zeichen < len(Eingabe):
+
+                            if Zeichen+1 in temp or Zeichen-1 in temp: return "Error"
+
+            else: return "Error"
+        
+    elif len(temp) > 1:
+
+            for Zeichen in temp:
+
+                if Zeichen > 1 and Zeichen < len(Eingabe):
+
+                    if Zeichen+1 in temp or Zeichen-1 in temp: return "Error"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if Rechenzeichen_test() == "Error":
+
+    print("die Rechenzeichen wurden falsch gesetzt")
