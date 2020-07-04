@@ -110,18 +110,26 @@ def Klammer_test(Klammern_liste_auf,Klammern_liste_zu,Liste_Rechenzeichen_gesamt
 
             if len(Liste_Rechenzeichen_gesamt) > 0: 
 
+                # Tested ob ein Rechenzeichen vor der Klammer steht
                 for index in Liste_Rechenzeichen_gesamt:
 
                     if index+1 in Klammern_liste_auf: return False
                     
-                    else: return
+                    else: return "Syntaxerror: Es steht kein Reichenzeichen vor der Klammer"
+
+                
 
             for index in range(len(temp1)):
 
                 # Test auf korrekte Stellung der Klammern                
-                if (temp1[index]) >= temp2[index]-1: return True
+                if (temp1[index]) >= temp2[index]-1: return "Syntaxerror: Die Klammer wurden Falsch gesetzt"
                    
-                else: return False
+                else: 
+                    
+                    for Zeichen in Rechenzeichen:
+
+                        if temp1[index] > Zeichen > temp2[index]:
+                            print("in der Klammer ist ein Rechenzeichen enthalten") 
         
         else: return False
  
@@ -149,29 +157,12 @@ def Eingabecutter(Anfang,Ende,Eingabe):
     return vor_der_klammer,inder_Klammer, nach_der_Klammer
 
 # Tested ob zwischen den Rechenzeichen mit des ein anderes zeichen ist
-def Syntax_test(liste,Rechenzeichen):
-    
-    if len(liste) > 1:
+def Syntax_test():
 
-        for Pos in liste: 
-            
-            if Pos+1 or Pos-1 in liste: raise SyntaxError("Es ist ein Syntaxerr an der Stelle",Pos)
+    temp =  Klammer_test(Klammern_auf, Klammern_zu, Liste_Rechenzeichen_gesamt)
 
+    if temp == False: print("es ist eine Klammer enthalten")
 
-# Tested auf eventuelle Syntax Fehler
-Syntax_test(Plus_pos,"+")
-Syntax_test(Minus_pos,"-")
-Syntax_test(Mal_pos,"*")
-Syntax_test(Durch_pos,"/")
+    else:print(temp)
 
-
-if Klammer_test(Klammern_auf, Klammern_zu, Liste_Rechenzeichen_gesamt) :raise SyntaxError("Es ist ein Syntaxerror aufgetreten")
-
-else: 
-    try:
-
-        vor_der_Klammer, in_der_Klammer, nach_der_Klammer = Eingabecutter(Klammern_auf[0], Klammern_zu[0], Eingabe)
-        Rechenzeichen_vor_der_Klammer(vor_der_Klammer)
-        print("Keine Syntaxerror") 
-        
-    except IndexError as e: raise SyntaxError("Es ist ein Syntaxerror aufgetreten")
+Syntax_test()
