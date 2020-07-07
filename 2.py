@@ -18,25 +18,25 @@ for Pos in range(len(Eingabe)):
 
     if Eingabe[Pos] == "+":
         Rechenzeichen = "+"
-        Plus_pos.append(Pos+1)
+        Plus_pos.append((Pos+1,"+"))
 
     elif Eingabe[Pos] == "-":
         Rechenzeichen = "-"
-        Minus_pos.append(Pos+1)
+        Minus_pos.append((Pos+1,"-"))
 
     elif Eingabe[Pos] == "/":
         Rechenzeichen = "/"
-        Durch_pos.append(Pos+1)
+        Durch_pos.append((Pos+1,"/"))
 
     elif Eingabe[Pos] == "*":
         Rechenzeichen = "*"
-        Minus_pos.append(Pos+1)
+        Minus_pos.append((Pos+1,"*"))
     
     elif Eingabe[Pos] == "(":
-        Klammern_auf.append(Pos+1)
+        Klammern_auf.append((Pos+1,"("))
 
     elif Eingabe[Pos] == ")":
-        Klammern_zu.append(Pos+1)
+        Klammern_zu.append((Pos+1,")"))
     
     else: Zahl.append(Pos+1)
 
@@ -114,68 +114,50 @@ def Eingabecutter(Anfang, Ende, Eingabe):
 
     return vor_der_klammer, inder_Klammer, nach_der_Klammer
 
-
 def Rechenzeichen_test():
 
     temp = Liste_Rechenzeichen_gesamt
 
-    if len(Mal_pos) > 0 :
+    print(temp[0][1])
 
-        if Mal_pos[0] != 1 :
-            
-            if len(temp) > 1:
+    if temp[0][1] != "*" and temp[0][1] != "/":
 
-                for Zeichen in temp :
-                    
-                    if Zeichen > 1 and Zeichen < len(Eingabe):
-                        
-                        if Zeichen+1 in temp or Zeichen-1 in temp: return "Error"
+        if len(Mal_pos) > 0 :
 
-        else: return "Error"
-
-    elif len(Durch_pos) > 0:
-
-            if Durch_pos[0] != 1:
-
-                if len(temp) > 1:
+            if Mal_pos[0] != 1 :
+                
+                if len(temp[0]) > 1:
 
                     for Zeichen in temp:
-
-                        if Zeichen > 1 and Zeichen < len(Eingabe):
-
-                            if Zeichen+1 in temp or Zeichen-1 in temp: return "Error"
+                        
+                        if Zeichen[0] > 1 and Zeichen[0] < len(Eingabe):
+                            
+                            if Zeichen[0]+1 in temp or Zeichen[0]-1 in temp: return "Error"
 
             else: return "Error"
-        
-    elif len(temp) > 1:
 
-            for Zeichen in temp:
+        elif len(Durch_pos) > 0:
 
-                if Zeichen > 1 and Zeichen < len(Eingabe):
+                if Durch_pos[0] != 1:
 
-                    if Zeichen+1 in temp or Zeichen-1 in temp: return "Error"
+                    if len(temp) > 1:
 
+                        for Zeichen in temp:
 
+                            if Zeichen[0] > 1 and Zeichen[0] < len(Eingabe):
 
+                                if Zeichen[0]+1 in temp or Zeichen[0]-1 in temp: return "Error"
 
+                else: return "Error"
+            
+        elif len(temp) > 1:
 
+                for Zeichen in temp:
 
+                    if Zeichen[0] > 1 and Zeichen[0] < len(Eingabe):
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-if Rechenzeichen_test() == "Error":
-
-    print("die Rechenzeichen wurden falsch gesetzt")
+                        if Zeichen[0]+1 in temp or Zeichen[0]-1 in temp: return "Error"
+    
+    else: return "Error"
+    
+if Rechenzeichen_test() == "Error": print("die Rechenzeichen wurden falsch gesetzt")
